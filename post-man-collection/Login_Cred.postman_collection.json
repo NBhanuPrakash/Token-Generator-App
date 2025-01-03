@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "4c866285-c687-46ca-a08c-47b133d3070c",
+		"name": "Login_Cred",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30467112"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/admin",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwtTech}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\":\"nnsaibhanuprakash@gmail.com\",\r\n    \"password\":\"Bhanu@898\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Fixed the response body parsing error\r",
+							"var jsonData = pm.response.text();\r",
+							"pm.environment.set(\"jwtTech\", jsonData);\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify that the response body is not empty\", function () {\r",
+							"  pm.expect(pm.response.text()).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response body is a valid JWT token\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    \r",
+							"    pm.expect(responseData).to.match(/^[\\w-]+\\.[\\w-]+\\.[\\w-]+$/);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify the response content type is text/plain\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/plain\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Ensure that the JWT token contains the required fields - 'sub', 'iat', and 'exp'\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    const jwtToken = responseData.split('.')[1]; // Extracting the payload part of the JWT token\r",
+							"\r",
+							"    const decodedPayload = Buffer.from(jwtToken, 'base64').toString('utf-8');\r",
+							"    const payloadData = JSON.parse(decodedPayload);\r",
+							"\r",
+							"    pm.expect(payloadData.sub).to.exist;\r",
+							"    pm.expect(payloadData.iat).to.exist;\r",
+							"    pm.expect(payloadData.exp).to.exist;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\":\"nnsaibhanuprakash456@gmail.com\",\r\n    \"password\":\"Bhanu@898\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwtTech}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\":\"nnsaibhanuprakash@gmail.com\",\r\n    \"password\":\"Bhanu@898\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\":\"nnsaibhanuprakash123@gmail.com\",\r\n    \"password\":\"Bhanu@898\",\r\n    \"roles\":\"USER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
