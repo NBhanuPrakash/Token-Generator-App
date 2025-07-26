@@ -1,0 +1,62 @@
+<div class="container py-5 min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-lg">
+      <div class="card-body p-4">
+
+        <!-- Toggle Buttons -->
+        <div class="d-flex justify-content-center mb-4">
+          <button class="btn btn-outline-primary me-2" (click)="isLogin = true">Login</button>
+          <button class="btn btn-outline-success" (click)="isLogin = false">Register</button>
+        </div>
+        <!-- Login Form -->
+        @if (isLogin) {
+          <form (ngSubmit)="onLoginSubmit(loginForm)" #loginForm="ngForm">
+            <h4 class="mb-4 text-center">Login</h4>
+
+            <div class="mb-3">
+              <label>Email</label>
+              <input type="email" class="form-control" name="email" required ngModel placeholder="Enter email" />
+            </div>
+
+            <div class="mb-3">
+              <label>Password</label>
+              <input type="password" class="form-control" name="password" required ngModel placeholder="Enter password" />
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+          </form>
+        }
+
+        <!-- Register Form -->
+        @else {
+          <form (ngSubmit)="onRegisterSubmit(registerForm)" #registerForm="ngForm">
+            <h4 class="mb-4 text-center">Register</h4>
+
+            <div class="mb-3">
+              <label>Full Name</label>
+              <input type="text" class="form-control" name="fullName" required ngModel placeholder="Enter full name" />
+            </div>
+
+            <div class="mb-3">
+              <label>Email</label>
+              <input type="email" class="form-control" name="email" required ngModel placeholder="Enter email" />
+            </div>
+
+            <div class="mb-3">
+              <label>Password</label>
+              <input type="password" class="form-control" name="password" required ngModel placeholder="Create password" />
+            </div>
+
+            <div class="mb-3">
+              <label>Confirm Password</label>
+              <input type="password" class="form-control" name="cPassword" required ngModel placeholder="Confirm password" />
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Register</button>
+          </form>
+        }
+
+      </div>
+    </div>
+  </div>
+</div>

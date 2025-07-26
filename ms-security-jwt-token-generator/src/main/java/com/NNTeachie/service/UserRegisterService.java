@@ -22,6 +22,9 @@ public class UserRegisterService {
     @Autowired
     private UserValidator userValidator;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -30,6 +33,7 @@ public class UserRegisterService {
 //        if (authenticated == null) {
             UsersTokens usersTokens = userRegisterDetails(request);
             UsersTokens save = repository.save(usersTokens);
+            userDetailsService.saveUserDetails(save.getUsername());
 //        }
 //        throw new UsernameNotFoundException("User Name Already Exits");
 

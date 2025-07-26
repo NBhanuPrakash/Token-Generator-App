@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
 public class UsersHomePage {
 
     @Autowired
@@ -25,9 +27,11 @@ public class UsersHomePage {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody RegisterAccountRequest request) {
+    public ResponseEntity<Map<String,String>> loginUser(@RequestBody RegisterAccountRequest request) {
         String s = userVerfication.verfyUser(request);
-        return ResponseEntity.ok(s);
+        Map<String,String> map = new HashMap<>();
+        map.put("token",s);
+        return ResponseEntity.ok(map);
     }
 
     @GetMapping("/admin")
@@ -41,4 +45,6 @@ public class UsersHomePage {
     public String userAccess() {
         return "User access granted!";
     }
+
+
 }
